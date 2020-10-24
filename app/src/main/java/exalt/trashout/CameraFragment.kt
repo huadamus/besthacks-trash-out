@@ -89,9 +89,10 @@ class CameraFragment : Fragment() {
         bottomSheet.progressBarLayout.isGone = false
     }
 
-    private fun resetToIdentify() {
-        bottomSheet.identifyLayout.isGone = false
-        bottomSheet.progressBarLayout.isGone = true
+    private fun resetToIdentify() = with(bottomSheet) {
+        identifyLayout.isGone = false
+        progressBarLayout.isGone = true
+        resultLayout.isGone = true
     }
 
     override fun onRequestPermissionsResult(
@@ -168,16 +169,19 @@ class CameraFragment : Fragment() {
                         )
                         val outcome = getLabel(requireContext(), cutResponse(text))
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                context,
-                                outcome,
-                                Toast.LENGTH_LONG
-                            ).show()
-                            resetToIdentify()
+                            onIdentifyResult(outcome)
                         }
                     }
                 }
             })
+    }
+
+    private fun onIdentifyResult(result: String) {
+        bottomSheet.apply {
+            progressBarLayout.isGone = true
+            resultLayout.isGone = false
+            resultLabel.text = result
+        }
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
