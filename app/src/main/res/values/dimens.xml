@@ -5,4 +5,10 @@
     <dimen name="grid_2">16dp</dimen>
     <dimen name="grid_3">24dp</dimen>
     <dimen name="grid_4">32dp</dimen>
+    <dimen name="grid_5">40dp</dimen>
+    <dimen name="grid_6">48dp</dimen>
+    <dimen name="bottom_sheet_height">600dp</dimen>
+    <dimen name="bottom_sheet_peek_height">240dp</dimen>
+    <dimen name="bottom_sheet_identify_button_font_size">18sp</dimen>
+    <dimen name="system_bottom_navigation_height">48dp</dimen>
 </resources>
