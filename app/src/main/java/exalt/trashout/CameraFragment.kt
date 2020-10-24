@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
 import java.nio.ByteBuffer
@@ -55,6 +56,10 @@ class CameraFragment : Fragment() {
         requireActivity().bottomSheet?.let {
             bottomSheetBehavior = BottomSheetBehavior.from(it)
             it.visibility = View.VISIBLE
+
+            it.identifyButton.setOnClickListener {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
         }
     }
 
