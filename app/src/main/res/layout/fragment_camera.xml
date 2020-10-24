@@ -34,7 +34,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/grid_6"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guidelineBottomSheetPeek"
         app:layout_constraintTop_toBottomOf="@id/flashIcon" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottomSheetPeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/bottom_sheet_peek_height" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
