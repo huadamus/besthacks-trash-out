@@ -11,4 +11,7 @@
         <item>Plastic</item>
         <item>Trash</item>
     </string-array>
+    <string name="bottom_sheet_hint">Hover your camera over the waste!</string>
+    <string name="button_take_photo">Identify</string>
+    <string name="bottom_sheet_header">Hey there!</string>
 </resources>

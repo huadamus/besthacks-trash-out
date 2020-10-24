@@ -12,7 +12,11 @@ import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_camera.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -34,6 +38,21 @@ class CameraFragment : Fragment() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+    private lateinit var bottomSheet: View
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+
+    private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            when (newState) {
+                BottomSheetBehavior.STATE_COLLAPSED -> resetToIdentify()
+            }
+        }
+
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            // Ignored on purpose
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +73,30 @@ class CameraFragment : Fragment() {
 
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
+
+        requireActivity().bottomSheet?.let {
+            bottomSheet = it
+            bottomSheetBehavior = BottomSheetBehavior.from(it)
+            bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
+            it.visibility = View.VISIBLE
+
+            it.identifyButton.setOnClickListener { identifyObject() }
+        }
+    }
+
+    private fun identifyObject() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        showProgressBar()
+    }
+
+    private fun showProgressBar() {
+        bottomSheet.identifyLayout.isGone = true
+        bottomSheet.progressBarLayout.isGone = false
+    }
+
+    private fun resetToIdentify() {
+        bottomSheet.identifyLayout.isGone = false
+        bottomSheet.progressBarLayout.isGone = true
     }
 
     override fun onRequestPermissionsResult(

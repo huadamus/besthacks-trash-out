@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,4 +11,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/statusBarGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/grid_3" />
+
+    <ImageView
+        android:id="@+id/flashIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_2"
+        android:layout_marginEnd="@dimen/grid_2"
+        android:src="@drawable/ic_baseline_flash_on_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/statusBarGuideline"
+        app:tint="?attr/colorPrimary" />
+
+    <include
+        layout="@layout/camera_bounds"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/grid_6"
+        app:layout_constraintBottom_toTopOf="@id/guidelineBottomSheetPeek"
+        app:layout_constraintTop_toBottomOf="@id/flashIcon" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottomSheetPeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/bottom_sheet_peek_height" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
