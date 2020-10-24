@@ -29,6 +29,6 @@ class SplashFragment : Fragment() {
     }
 
     companion object {
-        private const val SPLASH_TIME_MILLIS = 1_000L
+        private const val SPLASH_TIME_MILLIS = 1_500L
     }
 }
