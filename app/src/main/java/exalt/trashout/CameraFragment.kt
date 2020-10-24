@@ -23,13 +23,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-
-typealias LumaListener = (luma: Double) -> Unit
 
 class CameraFragment : Fragment() {
 
@@ -67,9 +64,6 @@ class CameraFragment : Fragment() {
         } else {
             requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
-        viewFinder.setOnClickListener {
-            takePhoto()
-        }
 
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -87,6 +81,7 @@ class CameraFragment : Fragment() {
     private fun identifyObject() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         showProgressBar()
+        takePhoto()
     }
 
     private fun showProgressBar() {
@@ -136,11 +131,6 @@ class CameraFragment : Fragment() {
                 .build()
             val imageAnalyzer = ImageAnalysis.Builder()
                 .build()
-                .also {
-                    it.setAnalyzer(cameraExecutor, LuminosityAnalyzer { luma ->
-                        Log.d(TAG, "Average luminosity: $luma")
-                    })
-                }
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
             try {
                 cameraProvider.unbindAll()
@@ -183,6 +173,7 @@ class CameraFragment : Fragment() {
                                 outcome,
                                 Toast.LENGTH_LONG
                             ).show()
+                            resetToIdentify()
                         }
                     }
                 }
@@ -200,26 +191,6 @@ class CameraFragment : Fragment() {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
         }
         return if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
-    }
-
-    private class LuminosityAnalyzer(private val listener: LumaListener) : ImageAnalysis.Analyzer {
-
-        private fun ByteBuffer.toByteArray(): ByteArray {
-            rewind()
-            val data = ByteArray(remaining())
-            get(data)
-            return data
-        }
-
-        override fun analyze(image: ImageProxy) {
-            val buffer = image.planes[0].buffer
-            val data = buffer.toByteArray()
-            val pixels = data.map { it.toInt() and 0xFF }
-            val luma = pixels.average()
-            listener(luma)
-
-            image.close()
-        }
     }
 
     companion object {
