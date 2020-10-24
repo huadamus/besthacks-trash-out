@@ -14,6 +14,10 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_camera.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
@@ -43,6 +47,9 @@ class CameraFragment : Fragment() {
             startCamera()
         } else {
             requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+        }
+        viewFinder.setOnClickListener {
+            takePhoto()
         }
 
         outputDirectory = getOutputDirectory()
@@ -121,10 +128,20 @@ class CameraFragment : Fragment() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val savedUri = Uri.fromFile(photoFile)
-                    val msg = "Photo capture succeeded: $savedUri"
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val text = getRequestResponse(
+                            "http://192.168.2.52/trashout/request.php",
+                            Uri.fromFile(photoFile)
+                        )
+                        val outcome = getLabel(requireContext(), cutResponse(text))
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                context,
+                                outcome,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
                 }
             })
     }
