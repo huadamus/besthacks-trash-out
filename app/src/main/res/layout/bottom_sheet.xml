@@ -58,6 +58,7 @@
         android:id="@+id/progressBarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/system_bottom_navigation_height"
         android:visibility="gone"
         app:layoutDescription="@xml/bottom_sheet_xml_constraintlayout_scene"
         tools:visibility="visible">

@@ -37,6 +37,18 @@ class CameraFragment : Fragment() {
     private lateinit var bottomSheet: View
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
+    private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            when (newState) {
+                BottomSheetBehavior.STATE_COLLAPSED -> resetToIdentify()
+            }
+        }
+
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            // Ignored on purpose
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,6 +70,7 @@ class CameraFragment : Fragment() {
         requireActivity().bottomSheet?.let {
             bottomSheet = it
             bottomSheetBehavior = BottomSheetBehavior.from(it)
+            bottomSheetBehavior.addBottomSheetCallback(bottomSheetCallback)
             it.visibility = View.VISIBLE
 
             it.identifyButton.setOnClickListener { identifyObject() }
