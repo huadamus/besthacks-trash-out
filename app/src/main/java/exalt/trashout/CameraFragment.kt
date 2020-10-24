@@ -14,13 +14,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_camera.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
@@ -37,6 +37,8 @@ class CameraFragment : Fragment() {
 
     private lateinit var bottomSheet: View
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+
+    private var identifyJob: Job? = null
 
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -93,6 +95,9 @@ class CameraFragment : Fragment() {
         identifyLayout.isGone = false
         progressBarLayout.isGone = true
         resultLayout.isGone = true
+
+        identifyJob?.cancel()
+        identifyJob = null
     }
 
     override fun onRequestPermissionsResult(
@@ -162,18 +167,20 @@ class CameraFragment : Fragment() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    GlobalScope.launch(Dispatchers.IO) {
-                        val text = getRequestResponse(
-                            "http://192.168.2.52/trashout/request.php",
-                            Uri.fromFile(photoFile)
-                        )
-                        val outcome = getLabel(requireContext(), cutResponse(text))
-                        withContext(Dispatchers.Main) {
-                            onIdentifyResult(outcome)
-                        }
+                    identifyJob = lifecycleScope.launchWhenStarted {
+                        val result = sendLabelRequest(photoFile)
+                        onIdentifyResult(result)
                     }
                 }
             })
+    }
+
+    private suspend fun sendLabelRequest(photoFile: File) = withContext(Dispatchers.IO) {
+        val text = getRequestResponse(
+            "http://192.168.2.52/trashout/request.php",
+            Uri.fromFile(photoFile)
+        )
+        return@withContext getLabel(requireContext(), cutResponse(text))
     }
 
     private fun onIdentifyResult(result: String) {
