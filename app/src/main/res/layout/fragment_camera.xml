@@ -11,12 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/statusBarGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/grid_3" />
+
+    <ImageView
+        android:id="@+id/flashIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_2"
+        android:layout_marginEnd="@dimen/grid_2"
+        android:src="@drawable/ic_baseline_flash_on_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/statusBarGuideline"
+        app:tint="?attr/colorPrimary" />
+
     <include
-        layout="@layout/camera_bounds"
+        layout="@layout/cameraBounds"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/grid_6"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/flashIcon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
