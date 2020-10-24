@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +34,7 @@ class CameraFragment : Fragment() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+    private lateinit var bottomSheet: View
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
     override fun onCreateView(
@@ -54,13 +56,27 @@ class CameraFragment : Fragment() {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         requireActivity().bottomSheet?.let {
+            bottomSheet = it
             bottomSheetBehavior = BottomSheetBehavior.from(it)
             it.visibility = View.VISIBLE
 
-            it.identifyButton.setOnClickListener {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }
+            it.identifyButton.setOnClickListener { identifyObject() }
         }
+    }
+
+    private fun identifyObject() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        showProgressBar()
+    }
+
+    private fun showProgressBar() {
+        bottomSheet.identifyLayout.isGone = true
+        bottomSheet.progressBarLayout.isGone = false
+    }
+
+    private fun resetToIdentify() {
+        bottomSheet.identifyLayout.isGone = false
+        bottomSheet.progressBarLayout.isGone = true
     }
 
     override fun onRequestPermissionsResult(
