@@ -30,7 +30,7 @@
         app:tint="?attr/colorPrimary" />
 
     <include
-        layout="@layout/cameraBounds"
+        layout="@layout/camera_bounds"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/grid_6"

@@ -13,6 +13,8 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
 import java.nio.ByteBuffer
@@ -29,6 +31,8 @@ class CameraFragment : Fragment() {
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +51,11 @@ class CameraFragment : Fragment() {
 
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
+
+        requireActivity().bottomSheet?.let {
+            bottomSheetBehavior = BottomSheetBehavior.from(it)
+            it.visibility = View.VISIBLE
+        }
     }
 
     override fun onRequestPermissionsResult(
