@@ -10,6 +10,7 @@
         <item>Paper</item>
         <item>Plastic</item>
         <item>Mixed trash</item>
+        <item>Try again - doesn\'t look like trash</item>
     </string-array>
 
     <string-array name="descriptions">
