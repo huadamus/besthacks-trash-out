@@ -12,6 +12,7 @@
         <item>Mixed trash</item>
     </string-array>
     <string name="bottom_sheet_hint">Hover your camera over the waste!</string>
+    <string name="result_label_hint">Slide down to continue</string>
     <string name="error">An error has occurred.</string>
     <string name="response">What you sent is\nmost likely…</string>
     <string name="button_take_photo">Identify</string>

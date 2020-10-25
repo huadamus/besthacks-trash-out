@@ -187,6 +187,7 @@ class CameraFragment : Fragment() {
         bottomSheet.apply {
             progressBarLayout.isGone = true
             resultLayout.isGone = false
+            resultLabelHint.isGone = false
             resultLabel.text = result
         }
     }
