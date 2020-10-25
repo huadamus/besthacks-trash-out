@@ -9,7 +9,7 @@
         <item>Metal</item>
         <item>Paper</item>
         <item>Plastic</item>
-        <item>Trash</item>
+        <item>Mixed trash</item>
     </string-array>
     <string name="bottom_sheet_hint">Hover your camera over the waste!</string>
     <string name="error">An error has occurred.</string>
