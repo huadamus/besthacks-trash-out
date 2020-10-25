@@ -180,7 +180,10 @@ class CameraFragment : Fragment() {
             "http://192.168.2.52/trashout/request.php",
             Uri.fromFile(photoFile)
         )
-        return@withContext buildResponse(requireContext(), getLabel(requireContext(), cutResponse(text)))
+        return@withContext buildResponse(
+            requireContext(),
+            getLabel(requireContext(), cutResponse(text))
+        )
     }
 
     private fun onIdentifyResult(result: String) {
@@ -189,6 +192,10 @@ class CameraFragment : Fragment() {
             resultLayout.isGone = false
             resultLabelHint.isGone = false
             resultLabel.text = result
+        }
+
+        TrashPicker.getTrashForLabel(result)?.let {
+            bottomSheet.trashIcon.setImageResource(it)
         }
     }
 
