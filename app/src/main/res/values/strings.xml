@@ -11,11 +11,21 @@
         <item>Plastic</item>
         <item>Mixed trash</item>
     </string-array>
+
+    <string-array name="descriptions">
+        <item>Throw it into a blue container. You can also dispose of paper there, but put your used up milk cartons in the yellow one instead!</item>
+        <item>Throw it into a green container. Remember that the bottles should be emptied before disposing of them!</item>
+        <item>Throw it into a yellow container, together with all the plastic you can find!</item>
+        <item>Throw it into a blue container, along with your newspapers, notebooks and paperbags - but put wet paper in the black one instead!</item>
+        <item>Throw it into a yellow container. You\'re doing a great and important job disposing of plastic the right way!</item>
+        <item>Throw it into a black container. Remember - meat and used diapers go here as well!</item>
+    </string-array>
+
     <string name="bottom_sheet_hint">Hover your camera over the waste!</string>
     <string name="result_label_hint">Slide down to continue</string>
     <string name="error">An error has occurred.</string>
     <string name="response">What you sent is\nmost likely…</string>
     <string name="button_take_photo">Identify</string>
     <string name="bottom_sheet_header">Hey there!</string>
-    <string name="bottom_sheet_result_header">What you sent is most likely...</string>
+    <string name="bottom_sheet_result_header">What you sent is most likely…</string>
 </resources>
