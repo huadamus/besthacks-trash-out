@@ -17,4 +17,5 @@
     <string name="response">What you sent is\nmost likely…</string>
     <string name="button_take_photo">Identify</string>
     <string name="bottom_sheet_header">Hey there!</string>
+    <string name="bottom_sheet_result_header">What you sent is most likely...</string>
 </resources>

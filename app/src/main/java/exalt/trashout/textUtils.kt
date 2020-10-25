@@ -2,10 +2,6 @@ package exalt.trashout
 
 import android.content.Context
 
-fun buildResponse(context: Context, type: String): String {
-    return context.getString(R.string.response) + System.lineSeparator() + System.lineSeparator() + type + "!" + System.lineSeparator()
-}
-
 fun cutResponse(response: String): Int {
     if (response.isEmpty() || response.length < 2) {
         return -1
