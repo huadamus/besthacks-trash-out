@@ -180,7 +180,7 @@ class CameraFragment : Fragment() {
             "http://192.168.2.52/trashout/request.php",
             Uri.fromFile(photoFile)
         )
-        return@withContext getLabel(requireContext(), cutResponse(text))
+        return@withContext buildResponse(requireContext(), getLabel(requireContext(), cutResponse(text)))
     }
 
     private fun onIdentifyResult(result: String) {
