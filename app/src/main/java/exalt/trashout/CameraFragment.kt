@@ -187,12 +187,15 @@ class CameraFragment : Fragment() {
         bottomSheet.apply {
             progressBarLayout.isGone = true
             resultLayout.isGone = false
-            resultLabelHint.isGone = false
             resultLabel.text = result
         }
 
         TrashPicker.getTrashForLabel(result)?.let {
             bottomSheet.trashIcon.setImageResource(it)
+        }
+
+        TrashPicker.getDescriptionForLabel(requireContext(), result).let {
+            bottomSheet.resultLabelHint.text = it
         }
     }
 

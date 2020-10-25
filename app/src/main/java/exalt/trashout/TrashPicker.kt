@@ -1,5 +1,7 @@
 package exalt.trashout
 
+import android.content.Context
+
 object TrashPicker {
     private val labelToTrashRes = mapOf(
         "Cardboard" to R.drawable.ic_recycle_bin_blue,
@@ -11,4 +13,9 @@ object TrashPicker {
     )
 
     fun getTrashForLabel(label: String): Int? = labelToTrashRes[label]
+
+    fun getDescriptionForLabel(context: Context, label: String) =
+        labelToTrashRes.keys.indexOf(label).let {
+            return@let context.resources.getStringArray(R.array.descriptions)[it]
+        }
 }

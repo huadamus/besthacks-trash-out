@@ -128,14 +128,27 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/grid_2"
             android:layout_marginTop="@dimen/grid_2"
-            android:text="@string/result_label_hint"
             android:textAlignment="center"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="?attr/colorOnPrimary"
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/trashIcon" />
+
+        <TextView
+            android:id="@+id/slideDownHint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/grid_2"
+            android:layout_marginTop="@dimen/grid_2"
+            android:text="@string/result_label_hint"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultLabelHint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
